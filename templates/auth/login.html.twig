@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+
+    <h1>Login</h1>
+
+    {{ form_start(loginForm) }}
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        {{ form_row(loginForm._username) }}
+        {{ form_row(loginForm._password, {label: 'Password'}) }}
+
+        <button type="submit" class="btn">Login</button>
+
+    {{ form_end(loginForm) }}
+
+{% endblock %}
