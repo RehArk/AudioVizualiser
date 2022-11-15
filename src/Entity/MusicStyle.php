@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\MusicStyleRepository;
+use App\Repository\Music\MusicStyleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MusicStyleRepository::class)]

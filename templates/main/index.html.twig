@@ -9,12 +9,18 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/developpement/workshop/mytube/src/Controller/MainController.php'|file_link(0) }}">src/Controller/MainController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/developpement/workshop/mytube/templates/main/index.html.twig'|file_link(0) }}">templates/main/index.html.twig</a></code></li>
-    </ul>
+    <h1>{{ app_name }}!</h1>
+
+    <table>
+    {% for music in musics %}
+        <tr>
+            <td>
+                <a href="music/{{ music.getPublicIdentifier() }}">{{ music.getName() }}</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+
 </div>
 {% endblock %}
