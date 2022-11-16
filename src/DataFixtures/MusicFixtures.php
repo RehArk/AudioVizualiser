@@ -30,6 +30,15 @@ class MusicFixtures extends Fixture
 
         $manager->flush();
 
+        
+        $twoStepFromHellArmada = new Music();
+        $twoStepFromHellArmada
+            ->setName("twoStepFromHellArmada")
+            ->setPublicIdentifier("nxn0mf2xj27t9vv6ggdalf7ggjh4755w")
+            ->setFile("865ac372-65f3-11ed-9022-0242ac120002")
+            ->addMusicStyle($styleClassic)
+        ;
+
         $amaranthElectroheart = new Music();
         $amaranthElectroheart
             ->setName("Electroheart")
@@ -123,6 +132,7 @@ class MusicFixtures extends Fixture
             ->addMusicStyle($styleMetal)
         ;
 
+        $manager->persist($twoStepFromHellArmada);
         $manager->persist($amaranthElectroheart);
         $manager->persist($museHysteria);
         $manager->persist($imagineDragonWarriors);

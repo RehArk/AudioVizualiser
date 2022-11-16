@@ -13,10 +13,133 @@
 
     <h1> {{ music.getName() }} </h1>
 
-    <audio controls>
-        <source src="/file/{{ music.getFile }}.mp3">
-        Your browser does not support the audio element.
+    <style>
+
+        #stream {
+            display: none;
+        }
+
+        #audio-visualiser {
+            width: 500px;
+            height: 500px;
+        }
+
+    </style>
+    
+    <audio id="stream" controls>
+        <source src="/file/{{ music.getFile }}.mp3" type="audio/mpeg">
+        Media not supported on your device.
     </audio>
+
+    <div class="audio-player">
+        <canvas id="audio-visualiser" height="1500" width="1500"></canvas>
+        <div class="controls">
+            <button class="play-pause">
+                play
+            </button>
+        </div>
+    </div>
+
+    <script>
+        
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const audioElement = document.querySelector('audio');
+
+        const canvas = document.querySelector('canvas');
+        const canvasCtx = canvas.getContext('2d');
+
+        canvasCtx.translate(canvas.width/2, canvas.height/2);
+        canvasCtx.lineWidth = 5;
+        canvasCtx.strokeStyle = '#ffffff';
+        
+        var gradient = canvasCtx.createRadialGradient(0, 0, 0, 0, 0, canvas.width/2);
+        gradient.addColorStop(0, '#000');
+        gradient.addColorStop(1, '#000');
+
+        const playPauseButton = document.querySelector('.play-pause');
+        playPauseButton.addEventListener('click', togglePlayPause);
+
+        function togglePlayPause() {
+            audioCtx.resume().then(() => {
+                if(audioElement.paused) {
+                    playPauseButton.innerHTML = 'pause';
+                    audioElement.play();
+                } else {
+                    playPauseButton.innerHTML = 'play';
+                    audioElement.pause();
+                }
+            });
+        }
+
+        const source = audioCtx.createMediaElementSource(audioElement);
+        const analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 256;
+
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        setInterval(function(){ 
+
+            analyser.getByteFrequencyData(dataArray);
+            console.log(dataArray);
+            draw(dataArray)
+
+        }, 75);
+
+        function getCircleY(radians, radius) {
+            return Math.sin(radians) * radius;
+        }
+
+        function getCircleX(radians, radius) {
+            return Math.cos(radians) * radius;
+        }
+
+        function drawLogo() {
+            canvasCtx.beginPath();
+            canvasCtx.fillStyle="white";
+            canvasCtx.moveTo(-4, 80);
+            canvasCtx.lineTo(-80, -80);
+            canvasCtx.moveTo(-80, -80);
+            canvasCtx.lineTo(-92, -80);
+            canvasCtx.moveTo(-92, -80);
+            canvasCtx.lineTo(0, 120);
+            canvasCtx.moveTo(0, 120);
+            canvasCtx.lineTo(80, -140);
+            canvasCtx.stroke();
+        }
+
+        function drawFrequences(data) {
+            data.forEach((value,i)=>{ 
+
+                let diametre = 200;
+                let radian = 2 * Math.PI / (256 / 2);
+                let angle = radian * (i+1) / 2 + Math.PI / 2 * 3;
+
+                canvasCtx.beginPath();
+                canvasCtx.moveTo(getCircleY(angle, diametre), getCircleX(angle, diametre));
+                canvasCtx.lineTo(getCircleY(angle, diametre + 5 + value * 2) , getCircleX(angle, diametre + 5 + value * 2)); //x,y
+                canvasCtx.stroke();
+
+            })
+        }
+
+        function draw(data){
+
+            data = [...data];
+            canvasCtx.clearRect(-canvas.width/2, -canvas.height/2, canvas.width, canvas.height);
+
+            canvasCtx.fillStyle = gradient;
+            canvasCtx.fillRect(-canvas.width/2, -canvas.height/2, canvas.height, canvas.width);
+
+            drawLogo()
+            drawFrequences(data)
+
+        };
+
+    </script>
 
 </div>
 
