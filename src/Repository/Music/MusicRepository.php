@@ -4,6 +4,7 @@ namespace App\Repository\Music;
 
 use App\Entity\Music;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Select;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -43,6 +44,29 @@ class MusicRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('m')
             ->orderBy('m.id', 'ASC')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function countNameLike(string $name): int
+    {
+
+        return $this->createQueryBuilder('m')
+            ->select('count(m.id)')
+            ->where("LOWER(m.name) like LOWER('%".$name."%')")
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    public function findNameWithLimit(string $name, int $limit, int $offset = 0): array
+    {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.id', 'ASC')
+            ->where("LOWER(m.name) like LOWER('%".$name."%')")
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()

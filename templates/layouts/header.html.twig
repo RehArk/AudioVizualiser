@@ -25,12 +25,23 @@
                         <a href="/" class="nav-link text-light">Home</a>
                     </li>
                     <li class="nav-item border-bottom mt-1 mx-4 px-2">
-                        <a href="" class="nav-link text-light">Musics</a>
+                        <a href="/music/page-1" class="nav-link text-light">Musics</a>
                     </li>
                 </ul>
 
-            </div>
-            
+                <div class="me-5 navbar-nav">
+                    {% if app.user %}
+                        <div class="nav-item mt-1 mx-4 px-2">
+                            <a href="/logout" class="nav-link text-light">logout</a>
+                        </div>
+                    {% else %}
+                        <div class="d-flex nav-item mt-1 mx-4 px-2">
+                            <a href="/login" class="nav-link text-light">login</a> <span class="mx-2 mt-2 text-light">|</span> <a href="/register" class="nav-link text-light">register</a>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>            
         </div>
 
     </nav>
