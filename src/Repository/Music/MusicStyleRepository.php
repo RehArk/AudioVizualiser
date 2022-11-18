@@ -39,6 +39,29 @@ class MusicStyleRepository extends ServiceEntityRepository
         }
     }
 
+    public function countStyleNameLike(string $name): int
+    {
+
+        return $this->createQueryBuilder('ms')
+            ->select('count(ms.id)')
+            ->where("LOWER(ms.name) like LOWER('%".$name."%')")
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    public function findStyleNameWithLimit(string $name, int $limit, int $offset = 0): array
+    {
+        return $this->createQueryBuilder('ms')
+            ->orderBy('ms.id', 'ASC')
+            ->where("LOWER(ms.name) like LOWER('%".$name."%')")
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return MusicStyle[] Returns an array of MusicStyle objects
 //     */

@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\Music\MusicStyleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: MusicStyleRepository::class)]
+#[UniqueEntity('name')]
 class MusicStyle
 {
     #[ORM\Id]

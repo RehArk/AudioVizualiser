@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Hello MusicController!{% endblock %}
 
 {% block body %}
 <style>
@@ -10,24 +10,24 @@
 
 <div class="example-wrapper">
 
-    <h1>{{ app_name }}!</h1>
+    <h1>{{ page_name }}!</h1>
 
     <form action="/music/page-1" method="post" class="d-flex">
-        <input type="text" name="musicName">
+        <input type="text" name="musicStyleName">
         <button type="submit">Search</button>
     </form>
 
     <table>
-    {% for music in musics %}
+    {% for music in musicsStyle %}
         <tr>
             <td>
-                <a id="audio" href="/music/{{ music.getPublicIdentifier() }}">{{ music.getName() }}</a>
+                {{ music.getName() }} - <a href="/admin/music-style/delete/{{ music.getId() }}">Delete</a>
             </td>
         </tr>
     {% endfor %}
     </table>
 
-    {% if musics|length == 0 %}
+    {% if musicsStyle|length == 0 %}
         <p>Aucun résulat</p>
     {% else %}
         {% for i in 1..numberOfPage %}
@@ -35,7 +35,9 @@
         {% endfor %}
     {% endif %}
 
-    
+    <div>
+        <a href="/admin/music-style/add">Créer</a>
+    </div>
 
 </div>
 {% endblock %}

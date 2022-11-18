@@ -27,6 +27,11 @@
                     <li class="nav-item border-bottom mt-1 mx-4 px-2">
                         <a href="/music/page-1" class="nav-link text-light">Musics</a>
                     </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item border-bottom mt-1 mx-4 px-2">
+                            <a href="/admin/music-style/page-1" class="nav-link text-light">Musics Style</a>
+                        </li>
+                    {% endif %}
                 </ul>
 
                 <div class="me-5 navbar-nav">
