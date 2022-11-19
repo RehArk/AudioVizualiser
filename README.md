@@ -15,6 +15,9 @@ to run the serveur
 fictures are installed on this project, please check fictures documentation
 webpack is installed on this project, please check webpack and webpack encore documentation
 
+dans php.ini
+    passer upload_max_filesize a 8192k
+
 la bdd est pgSQL avec par défaut
     - DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=14&charset=utf8"
     - db : app

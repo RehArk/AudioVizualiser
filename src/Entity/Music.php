@@ -81,6 +81,11 @@ class Music
         return $this->musicStyles;
     }
 
+    public function setMusicStyles(array $musicStyles)
+    {
+        $this->musicStyles = new ArrayCollection($musicStyles);
+    }
+
     public function addMusicStyle(MusicStyle $musicStyle): self
     {
         if (!$this->musicStyles->contains($musicStyle)) {

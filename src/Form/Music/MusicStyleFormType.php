@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Auth;
+namespace App\Form\Music;
 
 use App\Entity\MusicStyle;
 use Symfony\Component\Form\AbstractType;

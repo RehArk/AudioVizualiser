@@ -62,6 +62,19 @@ class MusicStyleRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findManyByIds(array $ids) : array {
+
+        $idsSql = '';
+
+        return $this->createQueryBuilder('ms')
+            ->orderBy('ms.id', 'ASC')
+            ->where('ms.id IN (:id)')
+            ->setParameter(':id', $ids)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return MusicStyle[] Returns an array of MusicStyle objects
 //     */

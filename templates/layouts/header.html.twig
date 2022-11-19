@@ -29,7 +29,18 @@
                     </li>
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item border-bottom mt-1 mx-4 px-2">
-                            <a href="/admin/music-style/page-1" class="nav-link text-light">Musics Style</a>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a href="/admin/music/page-1" class="nav-link text-dark">Musics</a></li>
+                                    <li><a href="/admin/music-style/page-1" class="nav-link text-dark">Musics Style</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item border-bottom mt-1 mx-4 px-2">
+                            
                         </li>
                     {% endif %}
                 </ul>
